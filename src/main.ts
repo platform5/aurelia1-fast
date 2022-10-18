@@ -2,12 +2,14 @@ import {Aurelia} from 'aurelia-framework';
 import environment from '../config/environment.json';
 import {PLATFORM} from 'aurelia-pal';
 import {provideFASTDesignSystem, fastCard, fastButton, fastTextField} from '@microsoft/fast-components';
+import { fastTextFieldLogin } from './components/text-field-login';
 
 provideFASTDesignSystem()
     .register(
         fastCard(),
         fastButton(),
-        fastTextField()
+        fastTextField(),
+        fastTextFieldLogin()
     );
 
 export function configure(aurelia: Aurelia): void {

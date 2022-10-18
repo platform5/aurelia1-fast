@@ -13,7 +13,10 @@
       <fast-button appearance="accent" click.trigger="onClick()">Update value</fast-button>
     </p>
 
-
+    <p>
+      <fast-text-field-login name="email" value.bind="email" placeholder="${emailPlaceholder}" 
+      change.trigger="emailChanged()" keyup.trigger="emailChanged()" autocomplete="username" autofocus></fast-text-field-login>
+    </p>
 
   </fast-card>
 </template>
