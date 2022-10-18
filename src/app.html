@@ -3,11 +3,12 @@
   
   <fast-card>
     <h2>${message}</h2>
-    <p>
+    <p if.bind="true">
       <fast-text-field name="email" type="text" value.bind="email" placeholder="${emailPlaceholder}"
       change.trigger="emailChanged()" keyup.trigger="emailChanged()" autocomplete="username"></fast-text-field>
     </p>
-    <p> Email fast texte value : ${email}</p>
+    <p if.bind="!email"> Email fast texte value : no value updated</p>
+    <p if.bind="email"> Email fast texte value : ${email}</p>
     <p>
       <fast-button appearance="accent" click.trigger="onClick()">Click Me</fast-button>
     </p>

@@ -1,8 +1,8 @@
 export class App {
   public message: string = 'Hello World!';
 
-  private emailPlaceholder: string = "youmail@domain.com";
-  private email: string = "no value updated";
+  private emailPlaceholder: string = 'youmail@domain.com';
+  private email: string = undefined;
 
 
   onClick() {
