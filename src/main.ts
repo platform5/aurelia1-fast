@@ -1,6 +1,14 @@
 import {Aurelia} from 'aurelia-framework';
 import environment from '../config/environment.json';
 import {PLATFORM} from 'aurelia-pal';
+import {provideFASTDesignSystem, fastCard, fastButton, fastTextField} from '@microsoft/fast-components';
+
+provideFASTDesignSystem()
+    .register(
+        fastCard(),
+        fastButton(),
+        fastTextField()
+    );
 
 export function configure(aurelia: Aurelia): void {
   aurelia.use
