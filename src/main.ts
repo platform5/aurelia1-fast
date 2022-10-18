@@ -15,6 +15,9 @@ export function configure(aurelia: Aurelia): void {
     .standardConfiguration()
     .feature(PLATFORM.moduleName('resources/index'));
 
+  aurelia.use
+    .plugin(PLATFORM.moduleName('aurelia1-fast-adapter'))
+
   aurelia.use.developmentLogging(environment.debug ? 'debug' : 'warn');
 
   if (environment.testing) {
