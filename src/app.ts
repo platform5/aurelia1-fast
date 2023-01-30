@@ -2,9 +2,8 @@ import { inject, BindingEngine, bindable } from 'aurelia-framework';
 import { Three } from './resources';
 
 // Potree
-import { AmbientLight, BoxGeometry, Mesh, MeshBasicMaterial, PerspectiveCamera, Raycaster, Scene, SphereGeometry, Vector2, Vector3, WebGLRenderer } from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { PointCloudOctree, Potree } from 'potree-core';
+import { AmbientLight, Box3, BoxGeometry, Mesh, MeshBasicMaterial, PerspectiveCamera, Raycaster, Scene, SphereGeometry, Vector2, Vector3, WebGLRenderer } from 'three';
+import { PointCloudOctree, PointSizeType, Potree } from 'potree-core';
 
 
 @inject(Element, BindingEngine)
@@ -19,7 +18,9 @@ export class App {
   constructor(private element: Element, private bindingEngine: BindingEngine) {
   }
 
-  public attached(): void {
+  public async attached(): Promise<void> {
+      await new Promise(resolve => setTimeout(resolve, 800));
+      this.clic();
   }
 
   private async clic(): Promise<void> {
@@ -31,20 +32,27 @@ export class App {
     this.cube.position.x = 15;
     this.cube.position.y = -0.05;
     this.three.scene.scene.add(this.cube);
-
-    await this.loadPointCloud('https://pointclouds.swissdata.io/sextant/villa-sextant/', 'cloud.js', new Vector3(8, -3, 0.0));
   
+
+    
+    await this.loadPointCloud('https://pointclouds.swissdata.io/sextant/villa-sextant/', 'cloud.js', new Vector3(8, -3, 0.0));
+    this.potree.pointBudget = 5_000_000;
     this.loop();
   }
 
   
   private async loadPointCloud(baseUrl: string, url: string, position: Vector3)
 	{
-			const potree = this.potree.loadPointCloud(url, url => `${baseUrl}${url}`,).then((pointcloud: PointCloudOctree) => {
+			const loadPotree = this.potree.loadPointCloud(url, url => `${baseUrl}${url}`,).then((pointcloud: PointCloudOctree) => {
 				pointcloud.material.size = 1.0;
 				pointcloud.material.shape = 2;
 				pointcloud.material.inputColorEncoding = 1;
 				pointcloud.material.outputColorEncoding = 1;
+        // pointcloud.boundingBox = new Box3(new Vector3(0,0,0), new Vector3(1,1,1));
+        pointcloud.castShadow = true;
+        pointcloud.pointSizeType = PointSizeType.ADAPTIVE;
+        // pointcloud.updateBoundingBoxes();
+        // pointcloud.material.pointOpacityType = 0.5;
 				// pointcloud.position.set(0, -2, 1)
 				// pointcloud.scale.set(0.1, 0.1, 0.1);
 				pointcloud.rotateOnAxis(new Vector3(-1,0,0), Math.PI/2);
@@ -57,7 +65,7 @@ export class App {
 
 			});
 
-      console.log('potree', potree);
+      console.log('potree', loadPotree);
 	}
 
   public add(pco: PointCloudOctree) {
@@ -72,11 +80,12 @@ export class App {
 
   }
 
+  
+
   private loop(): void {
-		this.cube.rotation.y += 0.01;
+		// this.cube.rotation.y += 0.01;
 
 		this.potree.updatePointClouds(this.pointClouds, this.three.scene.camera, this.three.scene.renderer);
-
     this.three.scene.controls.update();
     this.three.scene.renderer.render( this.three.scene.scene,  this.three.scene.camera);
 

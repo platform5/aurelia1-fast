@@ -1,6 +1,6 @@
 <template class="aurelia-three">
   <require from="./three.css"></require>
-  <canvas ref="canvas" id="aurelia-three-canvas" mousemove.delegate="canvasOnmousemove($event)"></canvas>
+  <canvas ref="canvas" id="aurelia-three-canvas" mousemove.delegate="canvasOnmousemove($event)" dblclick.delegate="canvasOndblclick($event)"></canvas>
   <div class="top-indicator">
     <slot name="top-indicator"></slot>
   </div>
