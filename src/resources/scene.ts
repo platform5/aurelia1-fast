@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { AmbientLight, Color, DirectionalLight } from 'three';
+import { AmbientLight, Color, DirectionalLight, Raycaster, Vector2} from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 // import Stats from 'stats.js/src/Stats';
 
@@ -10,19 +10,37 @@ export class Scene {
   public camera: THREE.PerspectiveCamera;
   public renderer: THREE.WebGLRenderer;
   public controls: OrbitControls;
+  public raycaster: Raycaster;
+  public normalized: Vector2;
   // public stats: Stats;
 
   constructor(canvas: HTMLCanvasElement) {
       this.canvas = canvas;
       this.scene = new THREE.Scene();
       this.camera = new THREE.PerspectiveCamera(45, this.canvas.offsetWidth / this.canvas.offsetHeight, 0.1, 3000);
-      this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, canvas: this.canvas});
+      this.renderer = new THREE.WebGLRenderer({
+         canvas: this.canvas,
+         alpha: true,
+         logarithmicDepthBuffer: false,
+         precision: 'highp',
+         premultipliedAlpha: true,
+         antialias: true,
+         preserveDrawingBuffer: false,
+         powerPreference: 'high-performance'
+        });
       this.renderer.localClippingEnabled = true;
       // this.renderer.setClearColor(0x000000, 0);
       this.controls = new OrbitControls(this.camera, this.renderer.domElement);
       // this.stats = new Stats();
+
+       this.raycaster = new Raycaster();
+       // @ts-ignore
+       this.raycaster.params.Points.threshold = 1e-2;
+       this.normalized = new Vector2();
+
       this.setupScene();
   }
+
 
     public setupScene(): void {
         this.setupBasics();

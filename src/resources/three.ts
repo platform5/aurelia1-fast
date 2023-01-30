@@ -46,7 +46,10 @@ export class Three {
 
   private activities: {id: string, label: string, percentage?: number}[] = [];
   
-  
+  public canvasOnmousemove(event) {  //canvas.onmousemove = function(event)
+    this.scene.normalized.set(event.clientX / this.scene.canvas.width * 2 - 1, -(event.clientY / this.scene.canvas.height) * 2 + 1);
+    this.scene.raycaster.setFromCamera(this.scene.normalized, this.scene.camera);
+};
   
 
 }
