@@ -6,10 +6,9 @@ import { mm2pt } from "swissqrbill/lib/node/esm/shared/utils.js"; // ESM. Tree-s
 
 @inject(Element, BindingEngine)
 export class App {
-  public message: string = 'Hello World!';
 
-  public emailPlaceholder: string = 'yourmail@domain.com';
-  public email: string = undefined;
+  public invoicePlaceholder: string = 'Facture 000';
+  public invoiceNb: string = "Facture ";
 
 
   constructor(private element: Element, private bindingEngine: BindingEngine) {
@@ -18,14 +17,12 @@ export class App {
 
   public activate(params: { urlId: string }) {
     setTimeout(() => {
-      this.onClick();
+      // this.onClick();
     }, 500);
   }
 
 
   onClick() {
-    console.log('fast-text-field', this.email);
-    this.email = 'Super !';
 
 
     // https://github.com/schoero/SwissQRBill
@@ -34,7 +31,7 @@ export class App {
       currency: "CHF",
       amount: 174.45,
       // reference: "",
-      message: "Facture 570",
+      message: this.invoiceNb,
       creditor: {
         name: "Platform5 R&D Sàrl",
         address: "Rue de la paix",
@@ -43,28 +40,29 @@ export class App {
         city: "Gland",
         account: "CH8880808005344886021",
         country: "CH"
-      },
-      debtor: {
-        name: "Test",
-        address: "Test",
-        buildingNumber: "00",
-        zip: 1260,
-        city: "Test",
-        country: "CH"
-      }
+      } //,
+      // debtor: {
+      //   name: "Test",
+      //   address: "Test",
+      //   buildingNumber: "00",
+      //   zip: 1260,
+      //   city: "Test",
+      //   country: "CH"
+      // }
     };
 
     const svg: SVG = new SVG(qrData as any, { language: "FR" });
 
 
     let qrCodeCanvasElement = document.getElementById("qrcode-invoice") as HTMLCanvasElement;
-    qrCodeCanvasElement.outerHTML = svg.outerHTML;
+    qrCodeCanvasElement.innerHTML = svg.outerHTML;
 
   }
 
 
 
-  emailChanged() {
-    console.log('fast-text-field : changing', this.email);
+  invoiceNbChanged() {
+    console.log('fast-text-field : changing', this.invoiceNb);
+    this.onClick();
   }
 }

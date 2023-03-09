@@ -2,26 +2,15 @@
   <require from="./app.css"></require>
   
   <fast-card>
-    <h2>${message}</h2>
-    <h3> Without if.bind="true"</h3>
     <p>
-      <fast-text-field name="email" type="text" value.bind="email" placeholder="${emailPlaceholder}"
-      change.trigger="emailChanged()" keyup.trigger="emailChanged()" autocomplete="username"></fast-text-field>
+      <fast-text-field if.bind="true" name="invoiceNb" type="text" value.bind="invoiceNb" placeholder="${invoicePlaceholder}"
+      change.trigger="invoiceNbChanged()" keyup.trigger="invoiceNbChanged()"></fast-text-field>
     </p>
-    <h3> With if.bind="true"</h3>
-    <p>
-      <fast-text-field if.bind="true" name="email" type="text" value.bind="email" placeholder="${emailPlaceholder}"
-      change.trigger="emailChanged()" keyup.trigger="emailChanged()" autocomplete="username"></fast-text-field>
-    </p>
-    <p if.bind="!email"> Email fast texte value : no value updated</p>
-    <p if.bind="email"> Email fast texte value : ${email}</p>
     <p>
       <fast-button appearance="accent" click.trigger="onClick()">Update value</fast-button>
     </p>
     <p>
-      <canvas id="qrcode-invoice">
-
-      </canvas>
+      <div id="qrcode-invoice"></div>
     </p>
 
 
