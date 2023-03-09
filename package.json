@@ -12,7 +12,8 @@
     "@microsoft/fast-element": "^1.10.5",
     "aurelia-animator-css": "^1.0.4",
     "aurelia-bootstrapper": "^2.4.0",
-    "aurelia1-fast-adapter": "^1.1.0"
+    "aurelia1-fast-adapter": "^1.1.0",
+    "swissqrbill": "^3.2.2"
   },
   "devDependencies": {
     "@types/jest": "^27.5.1",
